@@ -3,6 +3,17 @@ clear;
 
 addpath(genpath('utilities'));
              
+source_dir = '/nas/volume1/2photon/RESDATA/20161221_JR030W/retinotopy037Hz';
+acquisitionName = 'fov1_bar037Hz_run4';
+currSlice = 10;
+currFile = 3;
+
+tif_path = fullfile(source_dir, sprintf('Corrected_Channel01_File%03d_scaled', currFile));
+tif_name = sprintf('%s_Slice%02d_Channel01_File%03d.tif', acquisitionName, currSlice, currFile);
+
+
+%%
+
 %nam = 'demoMovie.tif';          % insert path to tiff stack here
 % tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/fov6_retinobar_037Hz_final_bluemask_00002/ch1_slices/';
 % nam = strcat(tif_path,'fov6_retinobar_037Hz_final_bluemask_00002.tif #1.tif #13.tif');
@@ -27,63 +38,66 @@ addpath(genpath('utilities'));
 % TEFO 
 % -------------------------------------------------------------------------
 %
-tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/NMF/';
-tif_name = 'fov1_grating2_00001_Channel01_Slice18.tif';
-mw_fn_base = '20161219_JR030W_grating2.mat';
-%
-slice_no = 13;
-tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/gratings/fov6_gratings_bluemask_5trials_00003/';
-tif_name = strcat('ch1_slices/', sprintf('fov6_gratings_bluemask_5trials_00003.tif #1 #%i.tif', slice_no));
-mw_fn = strcat(tif_path, 'mw_data/', '20161219_JR030W_gratings_bluemask_5trials_2.mwk');
-
-%
-% fov6_rsvp_bluemask_test_10trials_00001:
-% Slices:  22 13
-
-slice_no = 13;
-
-tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/rsvp/fov6_rsvp_bluemask_test_10trials/fov6_rsvp_bluemask_test_10trials_00001/ch1_slices/';
-tif_name = sprintf('fov6_rsvp_bluemask_test_10trials_00001.tif #1.tif #%i.tif', slice_no)
-%
-
+% tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/NMF/';
+% tif_name = 'fov1_grating2_00001_Channel01_Slice18.tif';
+% mw_fn_base = '20161219_JR030W_grating2.mat';
+% %
+% slice_no = 13;
+% tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/gratings/fov6_gratings_bluemask_5trials_00003/';
+% tif_name = strcat('ch1_slices/', sprintf('fov6_gratings_bluemask_5trials_00003.tif #1 #%i.tif', slice_no));
+% mw_fn = strcat(tif_path, 'mw_data/', '20161219_JR030W_gratings_bluemask_5trials_2.mwk');
 % 
-ridx = 1;
-fidx = 13;
-tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20160115_AG33/fov3_gratings1/';
-tif_name = strcat('run1_slices/', sprintf('fov3_gratings_0000%i.tif #2.tif #%i.tif', ridx, fidx));
-
+% %
+% % fov6_rsvp_bluemask_test_10trials_00001:
+% % Slices:  22 13
 % 
-ridx = 1;
-fidx = 13;
-tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20160118_AG33/fov1_gratings1/';
-tif_name = strcat('run1_slices/', sprintf('fov1_gratings_0000%i.tif #2.tif #%i.tif', ridx, fidx));
+% slice_no = 13;
+% 
+% tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/rsvp/fov6_rsvp_bluemask_test_10trials/fov6_rsvp_bluemask_test_10trials_00001/ch1_slices/';
+% tif_name = sprintf('fov6_rsvp_bluemask_test_10trials_00001.tif #1.tif #%i.tif', slice_no)
+% %
+% 
+% % 
+% ridx = 1;
+% fidx = 13;
+% tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20160115_AG33/fov3_gratings1/';
+% tif_name = strcat('run1_slices/', sprintf('fov3_gratings_0000%i.tif #2.tif #%i.tif', ridx, fidx));
+% 
+% % 
+% ridx = 1;
+% fidx = 13;
+% tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20160118_AG33/fov1_gratings1/';
+% tif_name = strcat('run1_slices/', sprintf('fov1_gratings_0000%i.tif #2.tif #%i.tif', ridx, fidx));
+% 
+% 
+% 
+% 
+% 
+% % -------------------------------------------------------------------------
+% % NON-TEFO 
+% % -------------------------------------------------------------------------
+% %
+% tif_path = '/nas/volume1/2photon/RESDATA/20161222_JR030W/20161222_JR030W_gratings1/fov1_gratings1_10reps_run1_Slice07_Channel01/NMF/';
+% tif_name = 'fov1_gratings_10reps_run1_Slice07_Channel01_File002_scaled.tif';
+% 
+% %
+% tif_path = '/nas/volume1/2photon/RESDATA/20161221_JR030W/rsvp/fov2_rsvp_25reps_Slice06_Channel01_File004/';
+% tif_name = 'fov2_rsvp_25reps_Slice06_Channel01_File004_scaled.tif'
+% 
+% 
+% % CONTROLS:
+% %
+% slice_no = 13;
+% tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/rsvp/fov6_rsvp_bluemask_shutteroff/ch1_slices/';
+% tif_name = sprintf('fov6_rsvp_bluemask_shutteroff_00001.tif #1.tif #%i.tif', slice_no)
 
 
 
-
-
-% -------------------------------------------------------------------------
-% NON-TEFO 
-% -------------------------------------------------------------------------
-%
-tif_path = '/nas/volume1/2photon/RESDATA/20161222_JR030W/20161222_JR030W_gratings1/fov1_gratings1_10reps_run1_Slice07_Channel01/NMF/';
-tif_name = 'fov1_gratings_10reps_run1_Slice07_Channel01_File002_scaled.tif';
-
-%
-tif_path = '/nas/volume1/2photon/RESDATA/20161221_JR030W/rsvp/fov2_rsvp_25reps_Slice06_Channel01_File004/';
-tif_name = 'fov2_rsvp_25reps_Slice06_Channel01_File004_scaled.tif'
-
-
-% CONTROLS:
-%
-slice_no = 13;
-tif_path = '/nas/volume1/2photon/RESDATA/TEFO/20161219_JR030W/rsvp/fov6_rsvp_bluemask_shutteroff/ch1_slices/';
-tif_name = sprintf('fov6_rsvp_bluemask_shutteroff_00001.tif #1.tif #%i.tif', slice_no)
 
 
 %%
 
-nam = strcat(tif_path, tif_name);
+nam = fullfile(tif_path, tif_name);
 
 sframe=1;						% user input: first frame to read (optional, default 1)
 %num2read=2000;					% user input: how many frames to read   (optional, default until the end)
@@ -101,8 +115,8 @@ d = d1*d2;                                          % total number of pixels
 
 %% Set parameters
 
-K = 150; %50; %300; %50; %150; %35;                                      % number of components to be found
-tau = .5; %2; %4;                                      % std of gaussian kernel (size of neuron) 
+K = 500; %50; %300; %50; %150; %35;                                      % number of components to be found
+tau = 2; %2; %4;                                      % std of gaussian kernel (size of neuron) 
 
 % tau = [1 1; 2 2];
 % K = [100; 50];
@@ -246,13 +260,32 @@ Pm.p = p;    % restore AR value
 % imshow(pixim/max(max(pixim))); colorbar()
 %% do some plotting
 
+options.df_prctile = 50;
+options.df_window = 20;
+
 [A_or,C_or,S_or,P_or] = order_ROIs(A2,C2,S2,P2); % order components
 K_m = size(C_or,1);
 [C_df,~] = extract_DF_F(Yr,A_or,C_or,P_or,options); % extract DF/F values (optional)
 
 figure;
 [Coor,json_file] = plot_contours(A_or,Cn,options,1); % contour plot of spatial footprints
-%savejson('jmesh',json_file,'filename');        % optional save json file with component coordinates (requires matlab json library)
+savejson('jmesh',json_file,'filename');        % optional save json file with component coordinates (requires matlab json library)
+
+nmf.source = source_dir;
+nmf.tiffPath = tif_path;
+nmf.tiffName = tif_name;
+nmf.rois = A_or;
+nmf.info = json_file;
+nmf.options = options;
+
+didx = 2;
+dstructfolder = sprintf('datastruct_%03d', didx);
+nmfPath = fullfile(source_dir, 'analysis', dstructfolder);
+if ~exist(nmfPath, 'dir')
+    mkdir(nmfPath)
+end
+nmfStructName = sprintf('nmf_%03d_Slice%02d_File%03d.mat', didx, currSlice, currFile);
+save(fullfile(nmfPath, nmfStructName), '-struct', 'nmf', '-v7.3');
 
 %% display components
 
