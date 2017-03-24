@@ -1,4 +1,4 @@
-function [nmfstruct, nmfStructNames] = getRoisNMF(D, meta, plotoutputs)
+function [options, nmfStructNames] = getRoisNMF(D, meta, plotoutputs)
 
 %clear;
 %% load file
@@ -21,8 +21,8 @@ nTiffs = meta.nTiffs;
 nSlices = length(slicesToUse);
 
 %%
-scaleFOV = D.params.scaleFOV;
-removeBadFrames = D.params.removeBadFrames;
+scaleFOV = D.maskInfo.params.scaleFOV;
+removeBadFrames = D.maskInfo.params.removeBadFrames;
 
 %% Load sample movie for params:
 
@@ -342,7 +342,7 @@ for sliceidx=1:nSlices
 
         close ALL;
 
-
+    
         nmfstruct.file(fidx).source = source_dir;
         nmfstruct.file(fidx).tiffPath = tif_path;
         nmfstruct.file(fidx).tiffName = tif_name;
