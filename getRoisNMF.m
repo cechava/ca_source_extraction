@@ -101,10 +101,10 @@ d = d1*d2;
 % 
 %options = D.params.options;
 
-K = D.params.K;
-tau = D.params.tau;
-merge_thr = D.params.merge_thr;
-p = D.params.p;
+K = D.maskInfo.params.K;
+tau = D.maskInfo.params.tau;
+merge_thr = D.maskInfo.params.merge_thr;
+p = D.maskInfo.params.p;
 
 options = CNMFSetParms(...                      
     'd1',d1,'d2',d2,...                         % dimensions of datasets
@@ -343,19 +343,19 @@ for sliceidx=1:nSlices
         close ALL;
 
     
-        nmfstruct.file(fidx).source = source_dir;
-        nmfstruct.file(fidx).tiffPath = tif_path;
-        nmfstruct.file(fidx).tiffName = tif_name;
-        nmfstruct.file(fidx).rois = A_or;
-        nmfstruct.file(fidx).correlation = Cn;
-        nmfstruct.file(fidx).info = json_file;
-        nmfstruct.file(fidx).options = options;
-        nmfstruct.file(fidx).preprocessing.scaleFOV = scaleFOV;
-        nmfstruct.file(fidx).preprocessing.removeBadFrame = removeBadFrames;
+        nmfstruct.file(tiffidx).source = source_dir;
+        nmfstruct.file(tiffidx).tiffPath = tif_path;
+        nmfstruct.file(tiffidx).tiffName = tif_name;
+        nmfstruct.file(tiffidx).rois = A_or;
+        nmfstruct.file(tiffidx).correlation = Cn;
+        nmfstruct.file(tiffidx).info = json_file;
+        nmfstruct.file(tiffidx).options = options;
+        nmfstruct.file(tiffidx).preprocessing.scaleFOV = scaleFOV;
+        nmfstruct.file(tiffidx).preprocessing.removeBadFrame = removeBadFrames;
         if removeBadFrames
-            nmfstruct.file(fidx).preprocessing.refframe = refframe;
-            nmfstruct.file(fidx).preprocessing.badframes = badframes;
-            nmfstruct.file(fidx).preprocessing.corrcoeffs = corrs;
+            nmfstruct.file(tiffidx).preprocessing.refframe = refframe;
+            nmfstruct.file(tiffidx).preprocessing.badframes = badframes;
+            nmfstruct.file(tiffidx).preprocessing.corrcoeffs = corrs;
         end
 
         %nmfStructName = sprintf('nmf_Slice%02d_File%03d.mat', currSlice, currFile)
