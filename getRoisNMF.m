@@ -106,6 +106,10 @@ tau = D.maskInfo.params.tau;
 merge_thr = D.maskInfo.params.merge_thr;
 p = D.maskInfo.params.p;
 
+% ***********************
+% Play with params...
+% ***********************
+
 options = CNMFSetParms(...                      
     'd1',d1,'d2',d2,...                         % dimensions of datasets
     'search_method','dilate','dist',3,...       % search locations when updating spatial components
