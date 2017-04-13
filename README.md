@@ -1,4 +1,4 @@
-# Deconvolution and demixing of calcium imaging data
+# Motion correction, deconvolution and demixing of calcium imaging data
 
 [![Join the chat at https://gitter.im/epnev/ca_source_extraction](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/epnev/ca_source_extraction?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -10,7 +10,20 @@ Pnevmatikakis, E.A., Soudry, D., Gao, Y., Machado, T., Merel, J., ... & Paninski
 
 Pnevmatikakis, E.A., Gao, Y., Soudry, D., Pfau, D., Lacefield, C., ... & Paninski, L. (2014). A structured matrix factorization framework for large scale calcium imaging data analysis. arXiv preprint arXiv:1409.2903. http://arxiv.org/abs/1409.2903
 
-Code description and related packages
+New: Motion Correction
+======
+We have just released [NoRMCorre](https://github.com/simonsfoundation/NoRMCorre) a new toolbox for NOn-Rigid Motion CORREction. You can find it in [Matlab](https://github.com/simonsfoundation/NoRMCorre) as a standalone package to be integrated with this package, or Python as part of [CaImAn](https://github.com/simonsfoundation/CaImAn).
+
+Code description
+=======
+
+The best way to start is by looking at the various demos.
+- [demo_script.m](https://github.com/epnev/ca_source_extraction): A simple demo with a small dataset included in the repo to display the notation and basic operations
+- [demo_memmap.m](https://github.com/epnev/ca_source_extraction/blob/master/demo_memmap.m): A larger demo displaying the process of memory mapping and spliting the field of view in patches to be processed in parallel and then combined.
+- [run_pipeline.m](https://github.com/epnev/ca_source_extraction/blob/master/run_pipeline.m): Demo for the complete pipeline of motion correction, source separation and spike extraction for large datasets. More details about the pipeline can be found [here](https://github.com/epnev/ca_source_extraction/wiki/Complete-analysis-pipeline).
+- [3D/demo_3D.m](https://github.com/epnev/ca_source_extraction/blob/master/3D/demo_3D.m): Demo for processing of 3D volumetric imaging data.
+
+Related packages
 =======
 
 This repository contains a MATLAB implementation of the spatio-temporal demixing, i.e., (source extraction) code for large scale calcium imaging data. Related code can be found in the following links:
@@ -79,29 +92,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
-[//]: #  (function name                           | description )
-[//]: #  (----------------------------------------|-----------------------------------)
-[//]: #  (demo_script.m                           | wrapper code <br />)
-[//]: #  (demoMovie.tif                           | Sample dataset for running the code (by W. Yang and D. Peterka) <br />)
-[//]: #  (update_spatial_components.m             | update spatial components given temporal components and data <br />)
-[//]: #  (update_temporal_components.m            | update temporal components given spatial components and data <br />)
-[//]: #  (merge_ROIs.m                            | merge spatially overlapping components that are temporally correlated <br />)
-[//]: #  (utilities/arpfit.m                      | estimation of noise level for every pixel and global time constants <br />)
-[//]: #  (utilities/bigread2.m                    | read (parts of) large tiff stacks)
-[//]: #  (utilities/com.m:                        | calculation of the center of mass of each component <br />)
-[//]: #  (utilities/correlation_image.m           | calculates the correlation image of the movie <br />)
-[//]: #  (utilities/extract_DF_F.m                | transforming the temporal components in the DF/F domain <br />)
-[//]: #  (utilities/graph_connected_comp.m        | finds the connected components in a graph <br />)
-[//]: #  (utilities/greedyROI2d.m                 | Greedy method for initializing the spatial and temporal components <br />)
-[//]: #  (utilities/interp_missing_data.m         | Filling in missing data using linear interpolation <br />)
-[//]: #  (utilities/lars_regression_noise.m       | solve a basis pursuit denoising problem using the LARS algorithm <br />)
-[//]: #  (utilities/make_G_matrix.m               | construct a convolution/deconvolution matrix <br />)
-[//]: #  (utilities/make_patch_video.m            | construct a video that displays the results of the algorithm <br />)
-[//]: #  (utilities/order_ROIs.m                  | order found components based on their temporal activation and spatial size <br />)
-[//]: #  (utilities/plain_foopsi.m                | projection of fluorescence onto the cone formed by the indicator dynamics )
-[//]: #  (utilities/plot_contours.m               | contour plot of found components and creation of a json file <br />)
-[//]: #  (utilities/tiff_reader.m                 | loading a tiff stack into matlab <br />)
-[//]: #  (utilities/threshold_components.m        | mild post-processing of spatial components <br />)
-[//]: #  (utilities/view_patches.m                | plotting of each found component and its temporal activation <br />)

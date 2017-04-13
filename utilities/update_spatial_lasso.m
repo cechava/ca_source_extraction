@@ -8,7 +8,7 @@ function [A,C] = update_spatial_lasso(Y, A, C, IND, sn, q, maxIter, options)
 %       C:    K x T,  temporal components + background
 %     IND:    K x T,  spatial extent for each component
 %      sn:    d x 1,  noise std for each pixel
-%       q:    scalar, control probability for FDR (default: 0.975)
+%       q:    scalar, control probability for FDR (default: 0.75)
 % maxIter:    maximum HALS iteration (default: 40)
 % options:    options structure
 
@@ -45,6 +45,7 @@ end
 nr = K - options.nb;
 IND(:,nr+1:K) = true;
 T = size(C,2);
+sn = double(sn);
 
 if memmaped
     %d = size(A,1);
@@ -54,13 +55,13 @@ if memmaped
         YC(t:min(t+step_size-1,d),:) = double(Y.Yr(t:min(t+step_size-1,d),:))*C';
     end
 else
-    YC = Y*C';
+    YC = double(Y*C');
 end
 
 %% initialization 
 A(~IND) = 0; 
 U = YC; 
-V = C*C'; 
+V = double(C*C'); 
 cc = diag(V);   % squares of l2 norm for all components 
 
 %% updating (neuron by neuron)
