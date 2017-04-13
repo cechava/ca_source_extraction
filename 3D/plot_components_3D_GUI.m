@@ -1,4 +1,4 @@
-function plot_components_3D_GUI(Y,A,C,b,f,Cn,options)
+function [T, Y_r, C, Df] = plot_components_3D_GUI(Y,A,C,b,f,Cn,options)
 
 % GUI for plotting components for the case of 3D volumetric imaging
 
