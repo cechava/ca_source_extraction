@@ -27,6 +27,8 @@ C = double(C);
 f = double(f);
 nA = full(sqrt(sum(A.^2))');
 [K,~] = size(C);
+fprintf('size C: %s', mat2str(size(C)));
+fprintf('size K: %s', num2str(K))
 A = A/spdiags(nA,0,K,K);    % normalize spatial components to unit energy
 C = bsxfun(@times,C,nA(:));
 
@@ -46,7 +48,7 @@ else
             AY = A'*double(Y);
         end
     else
-        AY = A'*Y;
+        AY = A'*double(Y); %jyr needs double from cell?
     end
 end
 Y_r = (AY- (A'*A)*C - full(A'*double(b))*f) + C;
@@ -81,7 +83,7 @@ txt = uicontrol('Style','text',...
 
 % Make figure visble after adding all components
 fig.Visible = 'on';
-plot_component(1)
+%plot_component(1)
 
 % This code uses dot notation to set properties.
 % Dot notation runs in R2014b and later.
@@ -167,7 +169,7 @@ plot_component(1)
             end
             leg = legend('Raw trace (filtered)','Inferred');
             set(leg,'FontSize',14,'FontWeight','bold');
-            title(sprintf('Component %i',i),'fontsize',16,'fontweight','bold'); drawnow; %pause;
+            %title(sprintf('Component %i',i),'fontsize',16,'fontweight','bold'); drawnow; %pause;
             drawnow;
             hold off;
         else

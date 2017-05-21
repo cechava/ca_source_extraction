@@ -80,7 +80,7 @@ if options.noise_norm
     min_noise = norm_image;
     %min_noise = prctile(P.sn(P.sn>0),options.noise_norm_prctile);
     %Y = bsxfun(@times,Y,reshape(1./max(P.sn,min_noise),d));
-    Y = bsxfun(@times,Y,reshape(1./double(min_noise),d));
+    Y = bsxfun(@times,double(Y),reshape(1./double(min_noise),d));
 end
 
 ds = d;

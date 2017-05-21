@@ -86,15 +86,15 @@ else
     G = speye(T);
 end
 
-ff = find(sum(A)==0);
-if ~isempty(ff)
-    A(:,ff) = [];
-    if exist('Cin','var')
-        if ~isempty(Cin)
-            Cin(ff,:) = [];
-        end
-    end
-end
+% ff = find(sum(A)==0);
+% if ~isempty(ff)
+%     A(:,ff) = [];
+%     if exist('Cin','var')
+%         if ~isempty(Cin)
+%             Cin(ff,:) = [];
+%         end
+%     end
+% end
 
 % estimate temporal (and spatial) background if they are not present
 if isempty(fin) || nargin < 5   % temporal background missing
@@ -128,7 +128,7 @@ else
     else
         AY = A'*Y;
     end
-    bY = b'*Y;
+    bY = b'*double(Y);
 end  
 
 if isempty(Cin) || nargin < 4    % estimate temporal components if missing    

@@ -108,7 +108,7 @@ end
 RESULTS(length(patches)) = struct();
 %%
 %parfor_progress(length(patches)); %monitor parfor progress (requires parfor_progress from mathworks file exchange)
-parfor i = 1:length(patches)    
+parfor i = 1:length(patches)
     if length(sizY) == 3
         if memmaped
             Y = data.Y(patches{i}(1):patches{i}(2),patches{i}(3):patches{i}(4),:);
@@ -125,9 +125,14 @@ parfor i = 1:length(patches)
         end
         [d1,d2,d3,T] = size(Y);
     end
-    %if ~(isa(Y,'single') || isa(Y,'double'));    Y = single(Y);  end
-    Y = double(Y - F_dark);
-    Y(isnan(Y)) = F_dark;
+    if ~(isa(Y,'single') || isa(Y,'double'));    Y = single(Y);  end
+    %Y = double(Y - F_dark);
+    % jyr:  since Y and F_dark diff dims, need to arrayfun...
+    Y = arrayfun(@(f) Y(:,:,:,f) - F_dark(f), 1:length(F_dark), 'UniformOutput', 0);
+    Y = cat(4, Y{1:end});
+    if any(isnan(Y))
+        Y(isnan(Y)) = F_dark; % jyr: this prob doesnt work if nan
+    end
     d = d1*d2*d3;
     options_temp = options;
     options_temp.d1 = d1; options_temp.d2 = d2; options_temp.d3 = d3;

@@ -80,6 +80,7 @@ end
 
 % normalize the data
 mY = mean(Y,dimY+1);
+Y = double(Y);
 Y = bsxfun(@minus,Y,mY);
 sY = sqrt(mean(Y.*Y,dimY+1));
 Y = bsxfun(@times,Y,1./sY);

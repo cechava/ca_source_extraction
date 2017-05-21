@@ -91,15 +91,15 @@ if ~isfield(options,'deconv_method') || isempty(options.deconv_method); method =
 if ~isfield(options,'bas_nonneg'); options.bas_nonneg = defoptions.bas_nonneg; end
 if ~isfield(options,'fudge_factor'); options.fudge_factor = defoptions.fudge_factor; end
 
-ff = find(sum(A)==0);
-if ~isempty(ff)
-    A(:,ff) = [];
-    if exist('Cin','var')
-        if ~isempty(Cin)
-            Cin(ff,:) = [];
-        end
-    end
-end
+% ff = find(sum(A)==0);
+% if ~isempty(ff)
+%     A(:,ff) = [];
+%     if exist('Cin','var')
+%         if ~isempty(Cin)
+%             Cin(ff,:) = [];
+%         end
+%     end
+% end
 
 % estimate temporal (and spatial) background if they are not present
 if isempty(fin) || nargin < 5           % temporal background missing

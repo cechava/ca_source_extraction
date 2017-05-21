@@ -114,6 +114,7 @@ if memmaped
     end
 else
     for i = 1:K_m
+        i
         ovlp_cmp = find(tAA(:,i));
         indeces = LOCS{i};
         for j = 1:length(ovlp_cmp)

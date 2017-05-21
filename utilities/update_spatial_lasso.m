@@ -27,7 +27,7 @@ repeat = 1;
 defoptions = CNMFSetParms;
 if nargin < 8; options = defoptions; end
 if nargin < 7 || isempty(maxIter); maxIter = 40; end
-if nargin < 6 || isempty(q); q = 0.75; end
+if nargin < 6 || isempty(q); q = 0.5; end %0.75; end
 if   nargin<5 || isempty(sn); sn = get_noise_fft(Y,options);  end;
 if   nargin<4 || isempty(IND); IND = determine_search_location(A,options.search_method,options); end 
 if nargin < 2 || isempty(A); 
@@ -41,6 +41,7 @@ end
 % end
 
 [d,K] = size(A);
+Y = double(Y);
 
 nr = K - options.nb;
 IND(:,nr+1:K) = true;
@@ -55,7 +56,7 @@ if memmaped
         YC(t:min(t+step_size-1,d),:) = double(Y.Yr(t:min(t+step_size-1,d),:))*C';
     end
 else
-    YC = double(Y*C');
+    YC = Y*C';
 end
 
 %% initialization 

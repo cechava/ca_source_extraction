@@ -50,7 +50,7 @@ if ~isfield(options,'tsub') || isempty(options.tsub); tsub = 1; else tsub = opti
 if nargin < 2 || (isempty(A_) && isempty(C))  % at least either spatial or temporal components should be provided
     error('Not enough input arguments')
 else
-    if ~isempty(C); K = size(C,1); elseif islogical(A_); K = size(A_,2); else K = size(A_2,2) - options.nb; end
+    if ~isempty(C); K = size(C,1); elseif islogical(A_); K = size(A_,2); fprintf('LOGICAL!\n'); else K = size(A_2,2) - options.nb; end
 end
 
 if nargin < 5 || isempty(P); P = preprocess_data(Y,1); end  % etsimate noise values if not present
@@ -156,7 +156,7 @@ if strcmpi(options.spatial_method,'constrained');
         end
     end
 elseif strcmpi(options.spatial_method,'regularized')                                                    
-    A = update_spatial_lasso(Y_ds, A_, Cf_ds, IND, options.sn, [], [], options);
+    A = update_spatial_lasso(Y_ds, A_, Cf_ds, IND, options.sn, [], [], options); % 6th argin is 'q' [0.5, 1] -- higher, sparser components
     K = size(A,2)-options.nb;
     b = full(A(:,K+1:end));
     A = A(:,1:K);
@@ -169,13 +169,13 @@ A = threshold_components(A,options);  % post-processing of components
 
 fprintf('Updated spatial components \n');
 
-ff = find(sum(A(:,1:K))==0);           % remove empty components
-if ~isempty(ff)
-    K = K - length(ff);
-    A(:,ff) = [];
-    C(ff,:) = [];
-    Cf_ds(ff,:) = [];
-end
+% ff = find(sum(A(:,1:K))==0);           % remove empty components
+% if ~isempty(ff)
+%     K = K - length(ff);
+%     A(:,ff) = [];
+%     C(ff,:) = [];
+%     Cf_ds(ff,:) = [];
+% end
 
 if memmaped; delete('Y_ds.mat'); end
 if strcmpi(options.spatial_method,'constrained');

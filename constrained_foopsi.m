@@ -93,7 +93,12 @@ E = speye(T);
 E(mis_data,:) = [];
 
 if any(mis_data)
-    y_full(mis_data) = interp1(find(~mis_data),y(~mis_data),find(mis_data));
+    fprintf('len mis_data: %s', mat2str(size(mis_data)))
+    if isempty(find(~mis_data))
+        y_full(mis_data) = zeros(size(y_full(mis_data)));
+    else
+        y_full(mis_data) = interp1(find(~mis_data),y(~mis_data),find(mis_data));
+    end
 end
     
 
