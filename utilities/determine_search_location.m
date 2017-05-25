@@ -61,15 +61,22 @@ switch method
            Vr = cell(nr,1);
            %cm(:,1) = Coor.x'*A(:,1:nr)./sum(A(:,1:nr)); 
            %cm(:,2) = Coor.y'*A(:,1:nr)./sum(A(:,1:nr));          % center of mass for each components
-           parfor i = 1:nr            % calculation of variance for each component and construction of ellipses
+           for i = 1:nr            % calculation of variance for each component and construction of ellipses
+               i
                if d3 == 1
                    Vr{i} = ([Coor.x - cm(i,1), Coor.y - cm(i,2)]'*spdiags(A(:,i),0,d,d)*[Coor.x - cm(i,1), Coor.y - cm(i,2)])/sum(A(:,i));
                    [V,D] = eig(Vr{i});
                    cor = [Coor.x - cm(i,1),Coor.y - cm(i,2)];
                else
                    Vr{i} = ([Coor.x - cm(i,1), Coor.y - cm(i,2), Coor.z - cm(i,3)]'*spdiags(A(:,i),0,d,d)*[Coor.x - cm(i,1), Coor.y - cm(i,2), Coor.z - cm(i,3)])/sum(A(:,i));
-                   [V,D] = eig(Vr{i});
-                   cor = [Coor.x - cm(i,1),Coor.y - cm(i,2),Coor.z - cm(i,3)];
+                   if sum((sum(isnan(Vr{i})) + sum(isinf(Vr{i})))) > 0
+                       IND(:, i) = false;
+                       fprintf('Found NaN/Inf: %i.  Skipping...', i);
+                       continue;
+                   else
+                       [V,D] = eig(Vr{i});
+                       cor = [Coor.x - cm(i,1),Coor.y - cm(i,2),Coor.z - cm(i,3)];
+                   end
                end                              
                d11 = min(max_size^2,max(min_size^2,D(1,1)));
                d22 = min(max_size^2,max(min_size^2,D(2,2)));               
