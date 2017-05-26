@@ -62,7 +62,6 @@ switch method
            %cm(:,1) = Coor.x'*A(:,1:nr)./sum(A(:,1:nr)); 
            %cm(:,2) = Coor.y'*A(:,1:nr)./sum(A(:,1:nr));          % center of mass for each components
            for i = 1:nr            % calculation of variance for each component and construction of ellipses
-               i
                if d3 == 1
                    Vr{i} = ([Coor.x - cm(i,1), Coor.y - cm(i,2)]'*spdiags(A(:,i),0,d,d)*[Coor.x - cm(i,1), Coor.y - cm(i,2)])/sum(A(:,i));
                    [V,D] = eig(Vr{i});
