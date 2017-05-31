@@ -58,7 +58,8 @@ if nargin < 4 || isempty(A_);
     IND = ones(d,size(C,1)); 
 else
     if islogical(A_)     % check if search locations have been provided, otherwise estimate them
-        IND = A_;
+        %if strcmpi(options.spatial_method, 'regularized') && isempty(C); K = K-1;
+        IND = A_(:, 1:K);
         if isempty(C)    
             INDav = double(IND)/diag(sum(double(IND)));          
             px = (sum(IND,2)>0);
