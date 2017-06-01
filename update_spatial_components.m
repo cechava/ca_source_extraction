@@ -58,9 +58,9 @@ if nargin < 4 || isempty(A_);
     IND = ones(d,size(C,1)); 
 else
     if islogical(A_)     % check if search locations have been provided, otherwise estimate them
-        if strcmpi(options.spatial_method, 'regularized') && isempty(C); K = K - options.nb; end
-        IND = A_(:, 1:K);
-	fprintf('size IND: %s\n', mat2str(size(IND)))
+        if strcmpi(options.spatial_method, 'regularized') && isempty(C); K = K - options.nb; end %jyr: hack for regularized method and logical A
+        IND = A_(:, 1:K); %A_;
+        fprintf('size IND: %s\n', mat2str(size(IND)))
         if isempty(C)    
             INDav = double(IND)/diag(sum(double(IND)));          
             px = (sum(IND,2)>0);
@@ -77,8 +77,8 @@ K = size(C,1);
 if strcmpi(options.spatial_method,'constrained'); A_ = A_(:,1:K); end
 
 Cf = [C;f];
-fprintf('Size C: %s', mat2str(size(Cf)))
-fprintf('Size A_: %s', mat2str(size(A_)))
+fprintf('Size C: %s\n', mat2str(size(Cf)))
+fprintf('Size A_: %s\n', mat2str(size(A_)))
 if size(Cf,1) > size(A_,2) && strcmpi(options.spatial_method,'regularized');
     error('When using options.spatial_method = regularized pass [A,b] as an input and not just A');
 end

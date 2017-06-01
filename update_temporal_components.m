@@ -104,6 +104,7 @@ if isempty(fin) || nargin < 5   % temporal background missing
         fin = fin/norm(fin);
         b = max(Y*fin',0);
     else
+        if islogical(b); b=double(b); end % jyr: hack for setting K=K-options.nb, b stays logical even tho A gets updated in update_spatial_lasso
         fin = max(b(bk_pix,:)'*Y(bk_pix,:),0)/(b(bk_pix,:)'*b(bk_pix,:));
     end
 end
