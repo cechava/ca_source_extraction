@@ -270,6 +270,9 @@ function data = imblur(data, sig, siz, nDimBlur, save_memory, chunkSiz)
 %
 %Output:
 %data       result after the Gaussian blur
+fprintf('gSig: %s', mat2str(sig));
+fprintf('gSiz: %s', mat2str(six));
+fprintf('nDimBlur,dimY: %s', mat2str(nDimBlur));
 
 if ~exist('nDimBlur', 'var'), nDimBlur = ndims(data) - 1; 
 else nDimBlur = min(nDimBlur, ndims(data)); end
