@@ -100,11 +100,25 @@ end
 if isempty(fin) || nargin < 5   % temporal background missing
     bk_pix = (sum(A,2)==0);     % pixels with no active neurons
     if isempty(b) || nargin < 3
-        fin = mean(Y(bk_pix,:));
-        fin = fin/norm(fin);
-        b = max(Y*fin',0);
-    else
-        fin = max(b(bk_pix,:)'*Y(bk_pix,:),0)/(b(bk_pix,:)'*b(bk_pix,:));
+        if memmaped
+            tmpYr = Y.Yr;
+            fin = mean(tmpYr(bk_pix,:));
+            fin = fin/norm(fin);
+            b = max(tmpYr*fin',0);
+            clear tmpYr;
+        else
+            fin = mean(Y(bk_pix,:));
+            fin = fin/norm(fin);
+            b = max(Y*fin',0);
+        end
+    else        
+        if memmaped
+            tmpYr = Y.Yr;
+            fin = max(b(bk_pix,:)'*tmpYr(bk_pix,:),0)/(b(bk_pix,:)'*b(bk_pix,:));
+            clear tmpYr;
+        else
+            fin = max(b(bk_pix,:)'*Y(bk_pix,:),0)/(b(bk_pix,:)'*b(bk_pix,:));
+        end
     end
 end
 

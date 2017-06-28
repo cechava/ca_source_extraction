@@ -32,9 +32,10 @@ function [A,b,C,P] = update_spatial_components(Y,C,f,A_,P,options)
 warning('off', 'MATLAB:maxNumCompThreads:Deprecated');
 memmaped = isobject(Y);
 if memmaped
-    sizY = size(Y,'Y');
+    sizY = size(Y,'Y'); fprintf('mem in spatial\n')
     d = prod(sizY(1:end-1));
     T = sizY(end);
+    %Y = Y.Yr;
 else
     [d,T] = size(Y);
 end
@@ -60,15 +61,23 @@ else
     if islogical(A_)     % check if search locations have been provided, otherwise estimate them        
         IND = A_(:,1:K);
         if isempty(C)    
-            INDav = double(IND)/diag(sum(double(IND)));          
-            px = (sum(IND,2)>0);
-            f = mean(Y(~px,:));
-            b = max(Y*f',0)/norm(f)^2;
-            C = max(INDav'*Y - (INDav'*b)*f,0);
+            INDav = double(IND)/diag(sum(double(IND))); 
+            px = (sum(IND,2)>0); tmpYr = Y.Yr;
+            f = mean(tmpYr(~px,:)); clear tmpYr; 
+            b = max(Y.Yr*f',0)/norm(f)^2; 
+            C = max(INDav'*Y.Yr - (INDav'*b)*f,0); clear INDav; clear Y_interp;
         end
         if strcmpi(options.spatial_method,'regularized')
-            A_ = max((Y - b*f)*C'/(C*C'),0);
-            A_ = A_.*IND;
+            % A_ = max((mm_fun(C,Y) - b*(f*C'))/(C*C'), 0); %max((Y.Yr - b*f)*C'/(C*C'),0);
+            % A_ = A_.*IND;
+            A_ = spalloc(size(IND,1),size(IND,2),nnz(IND));
+            chunk_size = 2e4;
+            CC = C*C';
+            for i = 1:chunk_size:size(IND,1)
+                A_(i:min(i+chunk_size-1, size(IND,1)),:) = max((Y.Yr(i:min(i+chunk_size-1, size(IND,1)),:) - b(i:min(i+chunk_size-1, size(IND,1)),:)*f)*C'/CC,0);
+                A_(i:min(i+chunk_size-1, size(IND,1)),:) = A_(i:min(i+chunk_size-1, size(IND,1)),:).*IND(i:min(i+chunk_size-1, size(IND,1)),:);
+
+            end
             A_ = [A_,b];
         end
     else
