@@ -61,11 +61,11 @@ else
     if islogical(A_)     % check if search locations have been provided, otherwise estimate them        
         IND = A_(:,1:K);
         if isempty(C)    
-            INDav = double(IND)/diag(sum(double(IND))); 
-            px = (sum(IND,2)>0); tmpYr = Y.Yr;
-            f = mean(tmpYr(~px,:)); clear tmpYr; 
-            b = max(Y.Yr*f',0)/norm(f)^2; 
-            C = max(INDav'*Y.Yr - (INDav'*b)*f,0); clear INDav; clear Y_interp;
+            INDav = double(IND)/diag(sum(double(IND))); fprintf('INDav: %s\n', class(INDav)); 
+            px = (sum(IND,2)>0); tmpYr = Y.Yr; fprintf('tmpYr: %s, Y.yr: %s\n', class(tmpYr), class(Y.Yr));
+            f = mean(tmpYr(~px,:)); clear tmpYr; fprintf('f: %s\n', class(f));
+            b = max(Y.Yr*f',0)/norm(f)^2; fprintf('b: %s\n', class(b))
+            C = max(INDav'*double(Y.Yr) - (INDav'*double(b))*double(f),0); clear INDav; clear Y_interp;
         end
         if strcmpi(options.spatial_method,'regularized')
             % A_ = max((mm_fun(C,Y) - b*(f*C'))/(C*C'), 0); %max((Y.Yr - b*f)*C'/(C*C'),0);
@@ -77,8 +77,8 @@ else
                 A_(i:min(i+chunk_size-1, size(IND,1)),:) = max((Y.Yr(i:min(i+chunk_size-1, size(IND,1)),:) - b(i:min(i+chunk_size-1, size(IND,1)),:)*f)*C'/CC,0);
                 A_(i:min(i+chunk_size-1, size(IND,1)),:) = A_(i:min(i+chunk_size-1, size(IND,1)),:).*IND(i:min(i+chunk_size-1, size(IND,1)),:);
 
-            end
-            A_ = [A_,b];
+            end 
+            fprintf('A_: %s\n', class(A_)); fprintf('b for horzcat: %s\n', class(b)); A_ = [A_,double(b)];
         end
     else
         IND = determine_search_location(A_(:,1:K),method,options);

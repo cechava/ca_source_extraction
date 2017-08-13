@@ -52,7 +52,7 @@ if memmaped
     %d = size(A,1);
     step_size = 2e4;
     for t = 1:step_size:d
-        YC(t:min(t+step_size-1,d),:) = (double(Y.Yr(t:min(t+step_size-1,d),:))*C').*IND(t:min(t+step_size-1,d),:);        
+        YC(t:min(t+step_size-1,d),:) = double(double(Y.Yr(t:min(t+step_size-1,d),:))*C').*IND(t:min(t+step_size-1,d),:);        
     end
 else    
     for k = 1:K
